@@ -1,0 +1,40 @@
+import { takeEvery, take, put, call } from 'redux-saga/effects';
+
+// worker saga's
+function* workerSaga() {
+    console.log('Hi form worker saga');
+    // yield put({ type: 'ACTION_FROM_WORKER' });
+    // yield put({ type: 'ANOTHER_ACTION' });
+    // yield put({ type: 'one more' });
+    console.log(yield put({ type: 'one more' }));
+}
+
+function* loginSaga() {
+    console.log('Hi from login in');
+}
+function* logoutSaga() {
+    console.log('Hi from logout');
+}
+
+// function* workFromSaga() {
+//     console.log('Hi there');
+// }
+
+// Constantly look for saga
+//watch saga
+function* rootSaga() {
+    // run multiple time
+    // yield takeEvery('HELLO', workerSaga);
+    // yield takeEvery('LOGIN', loginSaga);
+    // yield takeEvery('ACTION_FROM_WORKER', workFromSaga);
+
+    // run only once
+    // HANDLE IT ONLY ONCE
+    yield take('LOGIN');
+    yield call(loginSaga);
+    yield take('LOGOUT');
+    yield call(logoutSaga);
+}
+
+// watch saga -> action -> worker saga
+export default rootSaga;
